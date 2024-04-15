@@ -1,5 +1,6 @@
 import {Task} from "./model/Task.model.js"
 import {createXMLHttpRequest} from "./createXMLHttpRequest.js"
+import TasksService from "./Service/Tasks.services.js"
 
 // const url = "https://jsonplaceholder.typicode.com/users/1/todos"
 const urlUsers = "http://localhost:3000/users"
@@ -7,17 +8,21 @@ const urlTasks = "http://localhost:3000/tasks/"
 
 const userId = 2
 
-createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, init )
+const tasksService = new TasksService() 
 
-let arrInstancesTasks = []
-function init(arrTasks){ 
+tasksService.getTasks(userId, init )
 
-    if(arrTasks.error) return
 
-    const arrInstancesTasks = arrTasks.map(task => {
-        const { title, completed, createdAt, updatedAt } = task
-        return new Task(title, completed, createdAt, updatedAt)
-    })
+// createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, init )
+
+function init(arrInstancesTasks){ 
+
+    if(arrInstancesTasks.error) return
+
+    // const arrInstancesTasks = arrTasks.map(task => {
+    //     const { title, completed, createdAt, updatedAt } = task
+    //     return new Task(title, completed, createdAt, updatedAt)
+    // })
        
     //ARMAZENAR O DOM EM VARIAVEIS
     const itemInput = document.getElementById("item-input")
