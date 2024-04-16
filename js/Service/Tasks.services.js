@@ -13,16 +13,13 @@ export default class TasksService{
             throw TypeError("Task must be an instance of TaskModel")
         }
 
-        const fn = (task) => {
-
-            console.log("task: ", task)
-            
-            this.tasks.push(new Task(task))
-              
-            if(typeof cb === "function") cb()
-
-
+        const fn = (_task) => {
+            // const {title, completed, createdAt, updatedAt} = _task            
+            // this.tasks.push(new Task(title, completed, createdAt, updatedAt))  
+            this.getTasks(userId, cb)            
+            // if(typeof cb === "function") cb()
         }
+    
         createXMLHttpRequest("POST", `${urlUsers}/${userId}/tasks`, fn, JSON.stringify(task)) 
         
     }

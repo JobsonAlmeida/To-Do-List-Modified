@@ -8,11 +8,8 @@ export default class TasksController{
     }
 
     add(title, userId){
-        debugger
         console.log("this.service: ", this.service)
-        this.service.add(new Task(title), () => {
-            this.view.render()
-        }, userId)
+        this.service.add(new Task(title), () =>  this.view.render(this.service.tasks) , userId)
         // this.service.tasks
     }
 }
