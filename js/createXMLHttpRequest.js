@@ -21,7 +21,7 @@ export function createXMLHttpRequest(method, url, cb, data = null){
                 console.log(xhr.responseText)
                 console.log(xhr)
                 const json = JSON.parse(xhr.responseText)
-                console.log(json)
+                console.log("json:" , json)
                 
                 if(typeof cb === "function"){
                     cb(json)

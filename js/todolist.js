@@ -1,6 +1,8 @@
 import {Task} from "./model/Task.model.js"
 import {createXMLHttpRequest} from "./createXMLHttpRequest.js"
 import TasksService from "./Service/Tasks.services.js"
+import TasksController from "./Controller/Tasks.Controller.js"
+import TasksView from "./View/Tasks.View.js"
 
 // const url = "https://jsonplaceholder.typicode.com/users/1/todos"
 const urlUsers = "http://localhost:3000/users"
@@ -9,11 +11,34 @@ const urlTasks = "http://localhost:3000/tasks/"
 const userId = 2
 
 const tasksService = new TasksService() 
+const tasksView = new TasksView()
+
+console.log("taskService", tasksService)
+const taskController = new TasksController(tasksService, tasksView)
+
+ //ARMAZENAR O DOM EM VARIAVEIS
+ const itemInput = document.getElementById("item-input")
+ const todoAddForm = document.getElementById("todo-add")
+ const ul = document.getElementById("todo-list")
+ const lis = ul.getElementsByTagName("li")
 
 tasksService.getTasks(userId, init )
 
 
 // createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, init )
+
+todoAddForm.addEventListener("submit", function (e) {
+    e.preventDefault()
+    
+    debugger
+    taskController.add(itemInput.value, userId)
+
+    itemInput.value = ""
+    itemInput.focus()
+});
+
+
+
 
 function init(arrInstancesTasks){ 
 
@@ -24,11 +49,7 @@ function init(arrInstancesTasks){
     //     return new Task(title, completed, createdAt, updatedAt)
     // })
        
-    //ARMAZENAR O DOM EM VARIAVEIS
-    const itemInput = document.getElementById("item-input")
-    const todoAddForm = document.getElementById("todo-add")
-    const ul = document.getElementById("todo-list")
-    const lis = ul.getElementsByTagName("li")
+   
 
 
     function generateLiTask(obj) {
@@ -169,18 +190,6 @@ function init(arrInstancesTasks){
         }
     }
 
-    todoAddForm.addEventListener("submit", function (e) {
-        e.preventDefault()
-        
-        console.log("antes de addTask")
-        addTask(itemInput.value)
-        console.log("depois de addTask")
-
-        // renderTasks()
-
-        itemInput.value = ""
-        itemInput.focus()
-    });
 
     ul.addEventListener("click", clickedUl)
 
