@@ -7,6 +7,7 @@ function generateLiTask(obj) {
     const deleteButton = document.createElement("i")
 
     li.className = "todo-item"
+    li.setAttribute("data-id", obj.id)
 
 
 
@@ -66,6 +67,5 @@ export default class TasksView{
         tasks.forEach(taskObj => {
             this.container.appendChild(generateLiTask(taskObj))
         });
-
     }
 }

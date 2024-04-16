@@ -66,9 +66,7 @@ function init(arrInstancesTasks){
 
             },
             deleteButton: function () {
-                arrInstancesTasks.splice(currentLiIndex, 1)
-                renderTasks()
-
+                taskController.remove(currentLi.getAttribute("data-id"), userId)
             },
             containerEditButton: function () {
                 const val = currentLi.querySelector(".editInput").value
