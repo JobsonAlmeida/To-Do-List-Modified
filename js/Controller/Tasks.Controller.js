@@ -18,7 +18,16 @@ export default class TasksController{
     }
 
     update(task, userId){
+        task.updateAt = Date.now()
         this.service.update(task, this.view.render(this.service.tasks), userId)
 
     }
+
+    toogleDone(id, userId){
+        const task = this.service.getById(parseInt(id))
+        console.log("task: ", task)
+        let {completed} = task
+        this.update({completed: !completed, id: parseInt(id)}, userId)
+    }
+
 }

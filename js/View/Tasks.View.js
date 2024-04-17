@@ -64,8 +64,10 @@ export default class TasksView{
 
     render(tasks){
         this.container.innerHTML = ""
+        
         tasks.forEach(taskObj => {
             this.container.appendChild(generateLiTask(taskObj))
+            
         });
     }
 }

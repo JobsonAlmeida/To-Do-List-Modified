@@ -50,12 +50,15 @@ export default class TasksService{
     }
 
     update(task, cb, userId){
-
         const fn = () => { 
             this.getTasks(userId, cb)           
         }
-
         createXMLHttpRequest("PATCH", `${urlTasks}/${task.id}`, fn, JSON.stringify(task))
     }
+
+    getById(id){
+        return this.tasks.find(task => task.id === id)
+    }
+
 
 }

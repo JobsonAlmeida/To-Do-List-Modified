@@ -46,6 +46,7 @@ function init(arrInstancesTasks){
     function clickedUl(e) {
         const dataAction = e.target.getAttribute("data-action")
         console.log(e.target)
+        console.log("dataAction: ", dataAction)
         if (!dataAction) return
 
         let currentLi = e.target
@@ -83,8 +84,12 @@ function init(arrInstancesTasks){
             checkButton: function () {
 
                 // DEVE USAR O MÉTODO toggleDone do objeto correto
-                arrInstancesTasks[currentLiIndex].toggleDone()
-                renderTasks()
+                // arrInstancesTasks[currentLiIndex].toggleDone()
+                // renderTasks()
+
+                const id = currentLi.getAttribute("data-id")
+                console.log("id: ", id)
+                taskController.toogleDone(id, userId)
             }
         }
 
