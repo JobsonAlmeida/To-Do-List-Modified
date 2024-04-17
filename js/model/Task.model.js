@@ -1,13 +1,4 @@
 export function Task(title, completed, createdAt, updatedAt, id) {
-    // crie uma funcao construtora chamada Task. 
-    // essa funcao recebe por parametro obrigatório o nome da tarefa
-    // também recebe tres parametros opcionais (completed, createdAt, updatedAt)
-    // o objeto retornado por essa funcao deve ter quatro propriedades:
-    //  - title - string - obrigatório, 
-    //  - completed - boolean - opcional, false é o default, 
-    //  - createdAt - timestamp - opcional, timestamp atual é o valor default)  Date.now()
-    //  - updatedAt - timestamp - opcional, null é o valor default
-    // o objeto retornado por essa funcao deve ter um método chamado toggleDone, que deve inverter o boolean completed
 
     if (!title) {
         throw new Error("Task need a required parameter: title")

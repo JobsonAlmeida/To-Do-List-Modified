@@ -61,10 +61,16 @@ export default class TasksView{
         this.container = container    
     }
 
-    render(tasks){        
-        this.container.innerHTML = ""        
+    render(tasks){ 
+        
+        debugger
+        this.container.innerHTML = "" 
+        
+        
         tasks.forEach(taskObj => {
             this.container.appendChild(generateLiTask(taskObj))
         });
+
+
     }
 }

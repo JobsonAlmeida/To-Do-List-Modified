@@ -9,17 +9,31 @@ import { userId } from "../../config.js"
     add(title){
         if(title){
             console.log("this.service: ", this.service)
-            this.service.add(new Task(title), () =>  this.view.render(this.service.tasks), userId)
+            this.service.add(
+                new Task(title),
+                () =>  this.view.render(this.service.tasks),
+                (erro) => alert(erro),
+                userId
+            )
         }   
     }
 
     remove(id){
-        this.service.remove(id, () =>  this.view.render(this.service.tasks), userId)
+        this.service.remove(
+            id,
+            () =>  this.view.render(this.service.tasks),
+            (erro) => alert(erro),
+            userId)
     }
 
     update(task){
         task.updateAt = Date.now()                
-        this.service.update(task, () => this.view.render(this.service.tasks), userId)
+        this.service.update(
+            task,
+            () => this.view.render(this.service.tasks),
+            (erro) => alert(erro),
+            userId
+        )
     }
 
     toogleDone(id){
@@ -29,7 +43,12 @@ import { userId } from "../../config.js"
     }
 
     getTasks(){
-        this.service.getTasks(userId, () => this.view.render(this.service.tasks) )
+        debugger
+        this.service.getTasks(            
+            userId,
+            () => this.view.render(this.service.tasks),
+            (erro) => alert(erro)
+        )
     }
 
 }
