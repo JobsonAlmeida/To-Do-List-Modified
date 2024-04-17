@@ -15,7 +15,6 @@ const taskService = new TasksService()
 const ul = document.getElementById("todo-list")
 const tasksView = new TasksView(ul)
 
-console.log("taskService", taskService)
 const taskController = new TasksController(taskService, tasksView)
 
  //ARMAZENAR O DOM EM VARIAVEIS
@@ -45,8 +44,6 @@ function init(arrInstancesTasks){
 
     function clickedUl(e) {
         const dataAction = e.target.getAttribute("data-action")
-        console.log(e.target)
-        console.log("dataAction: ", dataAction)
         if (!dataAction) return
 
         let currentLi = e.target
@@ -81,14 +78,8 @@ function init(arrInstancesTasks){
                 currentLi.querySelector(".editContainer").removeAttribute("style")
                 currentLi.querySelector(".editInput").value = arrInstancesTasks[currentLiIndex].getTitle()
             },
-            checkButton: function () {
-
-                // DEVE USAR O MÉTODO toggleDone do objeto correto
-                // arrInstancesTasks[currentLiIndex].toggleDone()
-                // renderTasks()
-
+            checkButton: function () {        
                 const id = currentLi.getAttribute("data-id")
-                console.log("id: ", id)
                 taskController.toogleDone(id, userId)
             }
         }

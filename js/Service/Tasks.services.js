@@ -27,15 +27,13 @@ export default class TasksService{
 
     getTasks(userId, cb){
         const fn = (arrTasks) => { 
-            
+                        
             this.tasks = arrTasks.map(task => {
                 const { title, completed, createdAt, updatedAt, id } = task
                 return new Task(title, completed, createdAt, updatedAt, id)
             })
-
             if(typeof cb === "function") cb(this.tasks)
         }
-
         createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, fn) 
     }
 
@@ -50,7 +48,7 @@ export default class TasksService{
     }
 
     update(task, cb, userId){
-        const fn = () => { 
+        const fn = () => {             
             this.getTasks(userId, cb)           
         }
         createXMLHttpRequest("PATCH", `${urlTasks}/${task.id}`, fn, JSON.stringify(task))

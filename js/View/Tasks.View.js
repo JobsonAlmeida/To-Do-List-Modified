@@ -58,16 +58,13 @@ function generateLiTask(obj) {
 
 export default class TasksView{
     constructor(container){
-        this.container = container
-         
+        this.container = container    
     }
 
-    render(tasks){
-        this.container.innerHTML = ""
-        
+    render(tasks){        
+        this.container.innerHTML = ""        
         tasks.forEach(taskObj => {
             this.container.appendChild(generateLiTask(taskObj))
-            
         });
     }
 }
