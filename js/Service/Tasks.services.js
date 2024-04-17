@@ -1,8 +1,6 @@
 import { createXMLHttpRequest } from "../createXMLHttpRequest.js"
 import {Task} from "../model/Task.model.js"
-
-const urlUsers = "http://localhost:3000/users"
-const urlTasks = "http://localhost:3000/tasks/"
+import { urlUsers, urlTasks } from "../../config.js"
 
 export default class TasksService{
     constructor(){
@@ -10,24 +8,18 @@ export default class TasksService{
     }
 
     add(task, cb, userId){
-        if(!task instanceof Task){
-            throw TypeError("Task must be an instance of TaskModel")
-        }
-
+       
         const fn = (_task) => {
             // const {title, completed, createdAt, updatedAt} = _task            
             // this.tasks.push(new Task(title, completed, createdAt, updatedAt))  
-            this.getTasks(userId, cb)            
-            
+            this.getTasks(userId, cb)           
         }
     
-        createXMLHttpRequest("POST", `${urlUsers}/${userId}/tasks`, fn, JSON.stringify(task)) 
-        
+        createXMLHttpRequest("POST", `${urlUsers}/${userId}/tasks`, fn, JSON.stringify(task))  
     }
 
     getTasks(userId, cb){
         const fn = (arrTasks) => { 
-                        
             this.tasks = arrTasks.map(task => {
                 const { title, completed, createdAt, updatedAt, id } = task
                 return new Task(title, completed, createdAt, updatedAt, id)
@@ -48,6 +40,7 @@ export default class TasksService{
     }
 
     update(task, cb, userId){
+        task.updateAt = Date.now()
         const fn = () => {             
             this.getTasks(userId, cb)           
         }
