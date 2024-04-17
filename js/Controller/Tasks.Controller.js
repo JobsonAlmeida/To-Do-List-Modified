@@ -16,4 +16,9 @@ export default class TasksController{
     remove(id, userId){
         this.service.remove(id, () =>  this.view.render(this.service.tasks), userId )
     }
+
+    update(task, userId){
+        this.service.update(task, this.view.render(this.service.tasks), userId)
+
+    }
 }

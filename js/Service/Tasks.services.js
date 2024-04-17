@@ -49,4 +49,13 @@ export default class TasksService{
 
     }
 
+    update(task, cb, userId){
+
+        const fn = () => { 
+            this.getTasks(userId, cb)           
+        }
+
+        createXMLHttpRequest("PATCH", `${urlTasks}/${task.id}`, fn, JSON.stringify(task))
+    }
+
 }
