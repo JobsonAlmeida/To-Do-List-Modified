@@ -1,4 +1,3 @@
-import { createXMLHttpRequest } from "../createXMLHttpRequest.js"
 import { createPromise } from "../createPromise.js"
 import {Task} from "../model/Task.model.js"
 import { urlUsers, urlTasks } from "../../config.js"
@@ -10,21 +9,15 @@ export default class TasksService{
 
     add(task, cb, error, userId){
        
-        const fn = (_task) => {
-            // const {title, completed, createdAt, updatedAt} = _task            
-            this.getTasks(userId, cb)            
-        }
-            
         createPromise("POST", `${urlUsers}/${userId}/tasks`, JSON.stringify(task))
-            .then(() => this.getTasks(userId))
-            .then(dados => cb(dados))
+            .then(() => this.getTasks(userId)) 
+            .then(() => cb())
             .catch(err => error(err))
     }
 
     getTasks(userId, sucess, error){
         
         const fn = (arrTasks) => { 
-            console.log(arrTasks)
 
             if(arrTasks.error){
                 return alert(arrTasks.message)
@@ -35,12 +28,14 @@ export default class TasksService{
                 return new Task(title, completed, createdAt, updatedAt, id)
             })
             
-            if(typeof sucess === "function") sucess(this.tasks)
+            console.log("sucess", sucess)
+            if(typeof sucess === "function") {                
+                console.log("executou sucess")
+                sucess(this.tasks)
+            }
 
             return this.tasks
         }
-
-        // createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, fn, error) 
 
         return createPromise("GET", `${urlUsers}/${userId}/tasks`)
             .then(response => {
@@ -59,20 +54,19 @@ export default class TasksService{
 
     remove(id, cb, error, userId){
         
-        const fn = () => { 
-            this.getTasks(userId, cb)           
-        }
-       
-        createXMLHttpRequest("DELETE", `${urlTasks}/${id}`, fn, error) 
+        createPromise("DELETE", `${urlTasks}/${id}`)
+        .then(() => this.getTasks(userId))
+        .then(()=>cb())
+        .catch(err => error(err.message))
 
     }
 
     update(task, cb, error, userId){
         task.updateAt = Date.now()
-        const fn = () => {             
-            this.getTasks(userId, cb)           
-        }
-        createXMLHttpRequest("PATCH", `${urlTasks}/${task.id}`, fn, error, JSON.stringify(task))
+        createPromise("PATCH", `${urlTasks}/${task.id}`)
+            .then(() => this.getTasks(userId))
+            .then(()=>cb())
+            .catch(err => error(err.message))
     }
 
     getById(id){
