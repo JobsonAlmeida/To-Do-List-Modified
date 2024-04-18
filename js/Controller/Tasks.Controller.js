@@ -43,7 +43,6 @@ import { userId } from "../../config.js"
     }
 
     getTasks(){
-        debugger
         this.service.getTasks(            
             userId,
             () => this.view.render(this.service.tasks),

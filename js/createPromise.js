@@ -1,4 +1,6 @@
-export function createXMLHttpRequest(method, url, sucess, error, data = null){
+export function createPromise(method, url, data = null){
+    
+    const promise =  new Promise(function(resolve, reject){
 
     const xhr = new XMLHttpRequest()
 
@@ -10,22 +12,22 @@ export function createXMLHttpRequest(method, url, sucess, error, data = null){
     //E esse evento é onreadystatechange
     xhr.onreadystatechange = verificaAjax
 
-    function verificaAjax(){
-        
-        if(xhr.readyState === 4 ){
-            
+    function verificaAjax(){        
+        if(xhr.readyState === 4){            
             if(xhr.status < 400){        
                 const json = JSON.parse(xhr.responseText)                
-                if(typeof sucess === "function"){
-                    sucess(json)
-                }
+                resolve(json)
             }
-            else if(typeof error === "function"){
-                error("Algo deu errado com a conexão")
+            else{
+                reject(Error("algo deu errado com a conexão"))
             }
         }
-       
-
     }
+
+    })
+
+    console.log(promise)
+
+    return promise
 
 }

@@ -1,4 +1,5 @@
 import { createXMLHttpRequest } from "../createXMLHttpRequest.js"
+import { createPromise } from "../createPromise.js"
 import {Task} from "../model/Task.model.js"
 import { urlUsers, urlTasks } from "../../config.js"
 
@@ -15,7 +16,7 @@ export default class TasksService{
             this.getTasks(userId, cb)            
         }
     
-        createXMLHttpRequest("POST", `${urlUsers}/${userId}/tarefa`, fn, error, JSON.stringify(task))  
+        createXMLHttpRequest("POST", `${urlUsers}/${userId}/tasks`, fn, error, JSON.stringify(task))  
     }
 
     getTasks(userId, sucess, error){
@@ -32,12 +33,20 @@ export default class TasksService{
                 return new Task(title, completed, createdAt, updatedAt, id)
             })
 
-            debugger
+            
             if(typeof sucess === "function") sucess(this.tasks)
         }
 
-        debugger
-        createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, fn, error) 
+        // createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, fn, error) 
+
+        createPromise("GET", `${urlUsers}/${userId}/tasks`)
+        .then(response => {
+            fn(response)
+            return "Teste de return dentro de um metodo then"
+        })
+        .then(msg => console.log(msg))
+        .catch(erro => error(erro.message))
+
     }
 
     remove(id, cb, error, userId){
