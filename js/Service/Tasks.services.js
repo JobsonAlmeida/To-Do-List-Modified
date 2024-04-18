@@ -12,11 +12,13 @@ export default class TasksService{
        
         const fn = (_task) => {
             // const {title, completed, createdAt, updatedAt} = _task            
-            // this.tasks.push(new Task(title, completed, createdAt, updatedAt))  
             this.getTasks(userId, cb)            
         }
-    
-        createXMLHttpRequest("POST", `${urlUsers}/${userId}/tasks`, fn, error, JSON.stringify(task))  
+            
+        createPromise("POST", `${urlUsers}/${userId}/tasks`, JSON.stringify(task))
+            .then(() => this.getTasks(userId))
+            .then(dados => cb(dados))
+            .catch(err => error(err))
     }
 
     getTasks(userId, sucess, error){
@@ -32,20 +34,26 @@ export default class TasksService{
                 const { title, completed, createdAt, updatedAt, id } = task
                 return new Task(title, completed, createdAt, updatedAt, id)
             })
-
             
             if(typeof sucess === "function") sucess(this.tasks)
+
+            return this.tasks
         }
 
         // createXMLHttpRequest("GET", `${urlUsers}/${userId}/tasks`, fn, error) 
 
-        createPromise("GET", `${urlUsers}/${userId}/tasks`)
-        .then(response => {
-            fn(response)
-            return "Teste de return dentro de um metodo then"
-        })
-        .then(msg => console.log(msg))
-        .catch(erro => error(erro.message))
+        return createPromise("GET", `${urlUsers}/${userId}/tasks`)
+            .then(response => {
+                return fn(response)
+            })
+            .catch(erro => {
+                if(typeof error == "function"){
+                    return error(erro.message)
+                }
+                else{
+                    throw Error(erro.message)
+                } 
+            })
 
     }
 
