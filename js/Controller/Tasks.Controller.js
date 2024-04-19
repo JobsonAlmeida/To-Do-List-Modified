@@ -27,7 +27,7 @@ import { userId } from "../../config.js"
     }
 
     update(task){
-        task.updateAt = Date.now()                
+        task.updateAt = Date.now()
         this.service.update(
             task,
             () => this.view.render(this.service.tasks),

@@ -26,8 +26,6 @@ export function createPromise(method, url, data = null){
 
     })
 
-    console.log(promise)
-
     return promise
 
 }

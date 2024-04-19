@@ -1,4 +1,5 @@
 import { createPromise } from "../createPromise.js"
+import { createFetch } from "../createFetch.js"
 import {Task} from "../model/Task.model.js"
 import { urlUsers, urlTasks } from "../../config.js"
 
@@ -16,7 +17,7 @@ export default class TasksService{
     }
 
     getTasks(userId, sucess, error){
-        
+
         const fn = (arrTasks) => { 
 
             if(arrTasks.error){
@@ -28,16 +29,22 @@ export default class TasksService{
                 return new Task(title, completed, createdAt, updatedAt, id)
             })
             
-            console.log("sucess", sucess)
             if(typeof sucess === "function") {                
-                console.log("executou sucess")
                 sucess(this.tasks)
             }
 
             return this.tasks
         }
 
-        return createPromise("GET", `${urlUsers}/${userId}/tasks`)
+        return createFetch("GET", `${urlUsers}/${userId}/tasks`)
+            .then(response => {
+
+                let abc = response.json()
+
+                console.log(abc)
+                
+                return abc
+            })
             .then(response => {
                 return fn(response)
             })
@@ -63,7 +70,7 @@ export default class TasksService{
 
     update(task, cb, error, userId){
         task.updateAt = Date.now()
-        createPromise("PATCH", `${urlTasks}/${task.id}`)
+        createPromise("PATCH", `${urlTasks}/${task.id}`, JSON.stringify(task))
             .then(() => this.getTasks(userId))
             .then(()=>cb())
             .catch(err => error(err.message))
