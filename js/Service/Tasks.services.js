@@ -38,14 +38,6 @@ export default class TasksService{
 
         return createFetch("GET", `${urlUsers}/${userId}/tasks`)
             .then(response => {
-
-                let abc = response.json()
-
-                console.log(abc)
-                
-                return abc
-            })
-            .then(response => {
                 return fn(response)
             })
             .catch(erro => {
