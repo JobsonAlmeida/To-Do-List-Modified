@@ -1,4 +1,3 @@
-import { createPromise } from "../createPromise.js"
 import { createFetch } from "../createFetch.js"
 import {Task} from "../model/Task.model.js"
 import { urlUsers, urlTasks } from "../../config.js"
@@ -54,7 +53,7 @@ export default class TasksService{
 
     remove(id, cb, error, userId){
         
-        createPromise("DELETE", `${urlTasks}/${id}`)
+        createFetch("DELETE", `${urlTasks}/${id}`)
         .then(() => this.getTasks(userId))
         .then(()=>cb())
         .catch(err => error(err.message))
@@ -63,7 +62,7 @@ export default class TasksService{
 
     update(task, cb, error, userId){
         task.updateAt = Date.now()
-        createPromise("PATCH", `${urlTasks}/${task.id}`, JSON.stringify(task))
+        createFetch("PATCH", `${urlTasks}/${task.id}`, JSON.stringify(task))
             .then(() => this.getTasks(userId))
             .then(()=>cb())
             .catch(err => error(err.message))

@@ -74,6 +74,3 @@ function clickedUl(e) {
 
 ul.addEventListener("click", clickedUl)
 
-
-
-
