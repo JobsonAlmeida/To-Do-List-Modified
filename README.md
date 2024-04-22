@@ -1,10 +1,10 @@
 
-# <p align="center">  To-Do List </p>
+# <p align="center">  To-Do List Modified</p>
 
 
 ## Goal
 
-This is was a modification made in the project [Todo-List](https://github.com/JobsonAlmeidaTech/To-do-List).
+This was a modification made to the [Todo-List](https://github.com/JobsonAlmeidaTech/To-do-List) project 
 
 <p align="center">
 <img src="./images/to-do-list.jpg">
