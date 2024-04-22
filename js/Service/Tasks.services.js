@@ -10,7 +10,8 @@ export default class TasksService{
 
     add(task, cb, error, userId){
        
-        createPromise("POST", `${urlUsers}/${userId}/tasks`, JSON.stringify(task))
+        debugger
+        createFetch("POST", `${urlUsers}/${userId}/tasks`, JSON.stringify(task))
             .then(() => this.getTasks(userId)) 
             .then(() => cb())
             .catch(err => error(err))
