@@ -5,3 +5,4 @@ fetch("http://localhost:3000/tasks")
     .catch(err => console.log(err))
     .finally( ()=> console.log("finally"))
 
+  fad
